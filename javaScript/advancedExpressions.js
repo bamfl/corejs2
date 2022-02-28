@@ -23,7 +23,3 @@ console.log(d); // ReferenceError: Cannot access 'd' before initialization
 const c = 1;
 // end temporal zone for d
 let d = 2;
-
-// function, var - функциональная область видимости
-// const, let - блочная область видимости
-// глобальная область видимости
