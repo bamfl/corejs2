@@ -1,16 +1,89 @@
-// Objects Built-in methods
-const obj = Object.create(null);
-console.log(obj);
+// 2. Objects Built-in methods
+const obj = {};
+// Позволяет добавлять свойства ко всем объектам типа Object
+Object.prototype.newProp = 10;
 
-const obj1 = Object.assign({}, obj);
-console.log(obj1);
+// Создаёт новый объект путём копирования значений всех собственных перечислимых свойств из одного или более исходных объектов в целевой объект
+Object.assign({}, obj);
 
-const obj2 = Object.freeze();
+// Создаёт новый объект с указанными объектом прототипа и свойствами
+Object.create(null);
 
-const obj3 = Object.keys();
+// Добавляет к объекту именованное свойство, описываемое переданным дескриптором 
+// Object.defineProperty(obj, prop, descriptor)
+Object.defineProperty(obj, 'key', {
+  enumerable: false, // Равен true только в том случае, если это свойство можно увидеть через перечисление свойств содержащего его объекта. Значение по умолчанию установлено в false.
+  configurable: false, // Равен true только в том случае, если тип этого дескриптора свойства может быть изменён и если свойство может быть удалено из содержащего его объекта. Значение по умолчанию установлено в false.
+  writable: false, // Равен true только в том случае, если значение, ассоциированное со свойством, может быть изменено с помощью оператора присваивания (en-US). Значение по умолчанию установлено в false.
+  value: 'static' // Значение, ассоциированное со свойством. Может быть любым допустимым значением JavaScript (числом, объектом, функцией и т.д.). Значение по умолчанию установлено в undefined.
+});
 
-const obj4 = Object.values();
+// Добавляет к объекту именованные свойства, описываемые переданными дескрипторами
+Object.defineProperties(obj, {
+  'property1': {
+    value: true,
+    writable: true
+  },
+  'property2': {
+    value: 'Hello',
+    writable: false
+  }
+  // и т.д.
+});
 
-const obj5 = Object.entries();
+// Замораживает объект: другой код не сможет удалить или изменить никакое свойство
+Object.freeze();
 
-const obj6 = Object.fromEntries();
+// Возвращает прототип указанного объекта
+Object.getPrototypeOf();
+
+// Устанавливает прототип (т.е. внутреннее свойство [[Prototype]])
+Object.setPrototypeOf();
+
+// Возвращает массив, содержащий имена всех собственных перечислимых свойств переданного объекта
+Object.keys();
+
+// Возвращает массив значений перечисляемых свойств объекта, исключая св-ва из цепочки прототипов
+Object.values();
+
+// Метод возвращает массив собственных перечисляемых свойств указанного объекта в формате [key, value]
+Object.entries();
+
+// Преобразует список пар ключ-значение [key, value] в объект.
+Object.fromEntries();
+
+// Symbol.iterator usage
+let range = {
+  from: 1,
+  to: 5
+};
+
+// 1. вызов for..of сначала вызывает эту функцию
+range[Symbol.iterator] = function() {
+
+  // ...она возвращает объект итератора:
+  // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
+  return {
+    current: this.from,
+    last: this.to,
+
+    // 3. next() вызывается на каждой итерации цикла for..of
+    next() {
+      // 4. он должен вернуть значение в виде объекта {done:.., value :...}
+      if (this.current <= this.last) {
+        return { done: false, value: this.current++ };
+      } else {
+        return { done: true };
+      }
+    }
+  };
+};
+
+// теперь работает!
+for (let num of range) {
+  alert(num); // 1, затем 2, 3, 4, 5
+}
+
+// 3. Object as Hash - Be able to loop through Object keys
+// Возвращает массив, содержащий имена всех собственных перечислимых свойств переданного объекта
+Object.keys();
