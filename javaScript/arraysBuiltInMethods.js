@@ -8,6 +8,12 @@ const arr2 = [1, 2, 3, [4, 5]];
 const flattenArr = arr2.flat(); // [1, 2, 3, 4, 5]
 
 // 5. Arrays Iterating, Sorting, Filtering
+arr.forEach(el => console.log(el)); // 1, 2, 3, 4, 5
+
+const modified = arr.map(el => el * 2); // [2, 4, 6, 8, 10]
+
+const sum = arr.reduce((acc, curr) => acc + curr); // 15
+
 // Be able to custom sorting for Array
 arr.sort((a, b) => b - a); // [5, 4, 3, 2, 1]
 
